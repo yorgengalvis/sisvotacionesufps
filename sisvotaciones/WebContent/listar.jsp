@@ -44,26 +44,29 @@ integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw
 					</tr>
 				</thead>
 				<tbody>
+				<c:forEach var="votante" items="${listVotantes}">
 					<tr>
 						<td>
-							2
+							<c:out value="${votante.id}" />
 						</td>
 						<td>
-							Yorgen GAlvis
+							<c:out value="${votante.nombre}" />
 						</td>
 						<td>
-							yorgeneliecergr@ufps.edu.co	
+							<c:out value="${votante.email}" />
 						</td>
 						<td>
-							1010149889
+							<c:out value="${votante.documento}"></c:out>
 						</td>
 						<td>
-						Cedula Ciudadania
+							<c:out value="${votante.tipodocumento}"></c:out>
 						</td>
 						<td>
-						No</td>
-						<td><a href="edit?id=1' />">Editar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete?id=<c:out value='${usuario.id}'/>">Eliminar</a></td>
-						</tr>					
+							<c:out value="${votante.eleccion}"></c:out>
+						</td>
+						<td><a href="edit?id=<c:out value='${votante.id}' />">Editar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete?id=<c:out value='${votante.id}'/>">Eliminar</a></td>
+						</tr>	
+						</c:forEach>				
 				</tbody> 
 			</table></div>
 		</div>

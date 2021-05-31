@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import yorgengalvis.packages.dao.*;
+import yorgengalvis.packages.models.Votante;
+
+
+
 
 /**
  * Servlet implementation class VotanteServlet
@@ -19,12 +24,21 @@ import javax.servlet.http.HttpServletResponse;
 public class VotanteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+		private VotanteDAO votanteDAO;
+	
     /**
      * Default constructor. 
      */
     public VotanteServlet() {
         super();
     }
+    
+    public void init() throws ServletException {
+		// TODO Auto-generated method stub
+		String type="postgre";
+		this.votanteDAO = VotanteDAOFactory.getVotanteDao(type);
+	}
+    
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -78,9 +92,9 @@ public class VotanteServlet extends HttpServlet {
 	private void deleteVotante(HttpServletRequest request,HttpServletResponse response ) 
 			throws ServletException, SQLException, IOException{
 		
-		/*List<Usuario> listUsuarios  = usuarioDao.selectAll();
-		request.setAttribute( "listUsuarios", listUsuarios);*/
-		
+		/*List<Votante> votantes=VotanteDAO.selectAll();
+		request.setAttribute( "listVotantes", votantes);
+		*/
 		RequestDispatcher dispatcher = request.getRequestDispatcher("delete.jsp");
 		dispatcher.forward(request,response);
 	}
@@ -88,8 +102,8 @@ public class VotanteServlet extends HttpServlet {
 	private void listadoVotantes (HttpServletRequest request,HttpServletResponse response ) 
 			throws ServletException, SQLException, IOException{
 		
-		/*List<Usuario> listUsuarios  = usuarioDao.selectAll();
-		request.setAttribute( "listUsuarios", listUsuarios);*/
+		List<Votante> listVotantes  = votanteDAO.selectAll();
+		request.setAttribute( "listVotantes", listVotantes);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("listar.jsp");
 		dispatcher.forward(request,response);
