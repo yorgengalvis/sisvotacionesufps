@@ -19,7 +19,9 @@ public class VotanteDAOPostgreSQL implements VotanteDAO {
 	private static final String SELECT_ALL_VOTANTES = "SELECT * FROM votante;";
 	
 	
-	
+	public VotanteDAOPostgreSQL() {
+		this.conexion = ConexionPostgreSQL.getConexion(); 
+	}
 	
 	
 	
@@ -40,7 +42,8 @@ public class VotanteDAOPostgreSQL implements VotanteDAO {
 	public List<Votante> selectAll() {
 		List<Votante> votantes = new ArrayList<>();
 		try {
-			ResultSet rs = conexion.consultar(SELECT_ALL_VOTANTES);
+			PreparedStatement pst = (PreparedStatement)conexion.setPreparedStatement(SELECT_ALL_VOTANTES);
+			ResultSet rs = this.conexion.query();
 			while (rs.next()){
 				int id = rs.getInt("id");
 				String nombre = rs.getString("nombre");
@@ -53,7 +56,7 @@ public class VotanteDAOPostgreSQL implements VotanteDAO {
 			
 			
 		} catch (SQLException e) {
-			
+			System.out.print("ERRORRRRRR = = = = = = "+e.getMessage());
 		}
 		return votantes;
 	}

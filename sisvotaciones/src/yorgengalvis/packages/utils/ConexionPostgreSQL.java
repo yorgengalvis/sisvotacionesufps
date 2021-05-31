@@ -2,74 +2,78 @@ package yorgengalvis.packages.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 
 public class ConexionPostgreSQL {
-	private Connection con = null;
-    private static ConexionPostgreSQL conexion;
 
-    private static final String host = "queenie.db.elephantsql.com";
-    private static final String dbName = "mnjgxshj";
+	private Connection con = null;
+	private static ConexionPostgreSQL db;  // para patron singleton
+	private PreparedStatement  preparedStatement;
+
+    private static final String host = "localhost";
+    private static final String dbName = "bdweb";
     private static final String url = "jdbc:postgresql://" + host + ":5432/" + dbName;
     private static final String driver = "org.postgresql.Driver";
-    private static final String userName = "mnjgxshj";
-    private static final String password = "Uzjqo00sxV0W9OzPEB1q3wpoVvGMbbUV";
+    private static final String userName = "postgres";
+    private static final String password = "123abc";
+
 
     public ConexionPostgreSQL() {
-        this.conectar();
-    }
-
+		try {
+			Class.forName(driver).newInstance();
+			con = (Connection)DriverManager.getConnection(url,userName,password);
+		} catch (InstantiationException | IllegalAccessException
+				| ClassNotFoundException | SQLException e ) {
+			e.printStackTrace();
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void cerrarConexion(){
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//Patron Silgleton , una sola instancia 
+	public static ConexionPostgreSQL getConexion() {
+		if(db == null){
+			db = new ConexionPostgreSQL();
+		}
+		return db;
+	}
+	
+	//Metodo para retornar el resultado de una consulta
+	public ResultSet query() throws SQLException {
+		ResultSet res = preparedStatement.executeQuery();
+		return res;
+	}
+	
+	// metodo para actualizaciones 
+	public int execute() throws SQLException {
+		int result = preparedStatement.executeUpdate();
+		return result; 
+	}
+	
+	//inicializar el preparedStatement 
+		public PreparedStatement setPreparedStatement(String sql) throws SQLException{
+			this.preparedStatement = this.con.prepareStatement(sql);
+			return this.preparedStatement;
+		}
+	
+	// permitir el objeto conexion
+	public Connection getCon(){
+		return this.con;
+	}
+	
+	
     
-    public void conectar() {
-        try {
-            Class.forName(driver).newInstance();
-            con = (Connection) DriverManager.getConnection(url, userName, password);
-
-            boolean valid = con.isValid(50000);
-            System.out.println(valid ? "TEST OK" : "TEST FAIL");
-        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-    
-    public void cerrarConexion() {
-        try {
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static ConexionPostgreSQL getConexion() {
-        if (conexion == null) {
-            conexion = new ConexionPostgreSQL();
-        }
-
-        return conexion;
-    }
-
-    public ResultSet consultar(String sql) {
-
-        Statement st;
-        try {
-            st = this.con.createStatement();
-
-            ResultSet res = st.executeQuery(sql);
-
-            return res;
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return null;
-
-    }
 
 }

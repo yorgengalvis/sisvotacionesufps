@@ -30,4 +30,27 @@ public class Votante {
 		this.eleccion=eleccion;
 	}
 	
+	public String getNombre() {
+		return this.nombre;
+	}
+	
+	public String getEmail() {
+		return this.email;
+	}
+	
+	public String getDocumento() {
+		return this.documento;
+	}
+	
+	public int getTipoDocumento() {
+		return this.tipodocumento;
+	}
+	
+	public int getEleccion() {
+		return this.eleccion;
+	}
+	public int getId() {
+		return this.id;
+	}
+	
 }

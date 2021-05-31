@@ -47,24 +47,24 @@ integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw
 				<c:forEach var="votante" items="${listVotantes}">
 					<tr>
 						<td>
-							<c:out value="${votante.id}" />
+							<c:out value="${votante.getId()}" />
 						</td>
 						<td>
-							<c:out value="${votante.nombre}" />
+							<c:out value="${votante.getNombre()}" />
 						</td>
 						<td>
-							<c:out value="${votante.email}" />
+							<c:out value="${votante.getEmail()}" />
 						</td>
 						<td>
-							<c:out value="${votante.documento}"></c:out>
+							<c:out value="${votante.getDocumento()}"></c:out>
 						</td>
 						<td>
-							<c:out value="${votante.tipodocumento}"></c:out>
+							<c:out value="${votante.getTipoDocumento()}"></c:out>
 						</td>
 						<td>
-							<c:out value="${votante.eleccion}"></c:out>
+							<c:out value="${votante.getEleccion()}"></c:out>
 						</td>
-						<td><a href="edit?id=<c:out value='${votante.id}' />">Editar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete?id=<c:out value='${votante.id}'/>">Eliminar</a></td>
+						<td><a href="edit?id=<c:out value='${votante.getId()}' />">Editar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete?id=<c:out value='${votante.getId()}'/>">Eliminar</a></td>
 						</tr>	
 						</c:forEach>				
 				</tbody> 
