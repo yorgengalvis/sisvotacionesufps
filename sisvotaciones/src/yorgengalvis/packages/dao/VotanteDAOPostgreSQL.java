@@ -40,8 +40,7 @@ public class VotanteDAOPostgreSQL implements VotanteDAO {
 	public List<Votante> selectAll() {
 		List<Votante> votantes = new ArrayList<>();
 		try {
-			PreparedStatement preparedStatement  = (PreparedStatement)conexion.setPreparedStatement(SELECT_ALL_VOTANTES);
-			ResultSet rs = conexion.query();
+			ResultSet rs = conexion.consultar(SELECT_ALL_VOTANTES);
 			while (rs.next()){
 				int id = rs.getInt("id");
 				String nombre = rs.getString("nombre");
